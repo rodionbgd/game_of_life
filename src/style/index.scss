@@ -1,0 +1,236 @@
+$baseCellDiameter: calc(.5em + 1.8vh);
+$color-baseCell: #917155;
+$color-aliveCell: #7ad37a;
+$color-newAliveCell: #e0d3bf;
+$color-newDeadCell: #720707;
+$bg-color: #eee;
+$color: #4aecaa;
+
+
+:root {
+  box-sizing: border-box;
+  font-size: calc(.5em + 1vw);
+}
+
+*, :before, :after {
+  box-sizing: inherit;
+}
+
+body {
+  height: 100vh;
+
+  * + * {
+    //margin-top:1.5em
+  }
+}
+
+.header {
+  &-title {
+    color: $color;
+  }
+
+  margin: 15px 0 0;
+  font-family: sans-serif;
+}
+
+.controller {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  padding-left: 0;
+
+  li {
+    display: inline-block;
+    margin: 5px;
+
+    > * {
+      font-size: 1.5rem;
+      padding: .5em 1.5em;
+      border: 2px solid $color;
+      border-radius: .5em;
+      font-weight: 300;
+    }
+
+    button {
+      background-color: rgba(255, 255, 255, .6);
+      outline: none;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    input {
+      text-align: left;
+      width: 6em;
+    }
+  }
+}
+
+.main {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.gamefield {
+  height: 100%;
+  padding: 0;
+  margin: 0 auto;
+  //overflow: auto;
+
+  tbody {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background-color: #9d8061;
+    height: 100%;
+    margin-bottom: 5px;
+  }
+
+  tr {
+    display: flex;
+    height: $baseCellDiameter;
+    text-align: center;
+    @supports (display: flex) {
+      height: auto;
+    }
+  }
+}
+
+.c {
+  border: 2px solid rgba(25, 25, 25, .8);
+  border-radius: 45%;
+  background-color: $color-baseCell;
+  min-width: $baseCellDiameter;
+  min-height: $baseCellDiameter;
+  width: $baseCellDiameter;
+  height: $baseCellDiameter;
+  opacity: .8;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  transition: opacity .1s ease, transform .15s ease-out;
+
+  &:not(:target) {
+    height: 100%;
+  }
+
+  @supports (display: flex) {
+    &.c {
+      height: auto;
+    }
+  }
+
+  &:before {
+    background: rgb(30, 30, 30);
+    border-radius: 50%;
+    content: "";
+    display: block;
+    height: 30%;
+    left: 50%;
+    opacity: .6;
+    position: absolute;
+    transform: translate(-55%, -45%);
+    top: 50%;
+    width: 30%;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &.alive {
+    background: $color-aliveCell;
+
+    &:hover {
+      transform: scaleX(.9) scaleY(.6);
+      animation: wiggleCell .8s infinite;
+      will-change: opacity;
+    }
+  }
+
+  &.new-dead {
+    background: $color-newDeadCell;
+  }
+
+  &.new-alive {
+    background: $color-newAliveCell;
+  }
+}
+
+.c1 {
+  transform: scale(.95) skewX(-4deg);
+
+  &:before {
+    height: 40%;
+    opacity: .5;
+    transform: translate(-40%, -30%);
+    width: 30%;
+  }
+}
+
+.c2 {
+  transform: scale(.88);
+
+  &:before {
+    height: 20%;
+    opacity: .8;
+    transform: translate(-70%, -30%);
+    width: 30%;
+  }
+}
+
+.c3 {
+  transform: scale(.95) skewY(2deg);
+
+  &:before {
+    height: 50%;
+    opacity: .4;
+    transform: skewY(10deg) translate(-20%, -70%);
+    width: 40%;
+  }
+}
+
+.c4 {
+  transform: scale(.9) skewX(3deg);
+
+  &:before {
+    height: 35%;
+    opacity: .5;
+    transform: translate(-15%, -55%);
+    width: 45%;
+  }
+}
+
+.c5 {
+  &:before {
+    height: 40%;
+    transform: skewX(5deg) translate(-60%, -24%);
+    width: 50%;
+  }
+}
+
+@keyframes wiggleCell {
+  0% {
+    transform: scale(1) rotate(0);
+  }
+  20% {
+    transform: scale(.95) rotate(4deg);
+  }
+  40% {
+    transform: scale(.97) rotate(-8deg);
+  }
+  60% {
+    transform: scale(.99) rotate(2deg);
+  }
+  80% {
+    transform: scale(.94) rotate(-5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+

@@ -1,0 +1,27 @@
+$bg-color:#eee;
+$slider-width:20rem;
+$slider-height:1.5rem;
+$color: #35a678;
+
+.slider{
+  font-size: 1rem;
+  margin:.5rem;
+  padding: 0;
+  width: $slider-width;
+  height: $slider-height;
+  border: 2px solid $color;
+  border-radius: .3em;
+
+  .thumb{
+    position: relative;
+    top:-.5rem;
+    padding: 0;
+    left: ($slider-width)/2 - $slider-width/40 +.25rem;
+    width: $slider-width/20;
+    height: $slider-height*1.5;
+    border-radius: .2em;
+    border:none;
+    background: #248191;
+    cursor: pointer;
+  }
+}
