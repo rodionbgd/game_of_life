@@ -9,15 +9,19 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: "module",
   },
-  ignorePatterns: ["**/dist/**", "**/node_modules/**"],
-  rules: {
-    "max-len": [
-      "error",
-      {
-        ignoreComments: true,
-        code: 120,
-      },
-    ],
-  },
+  overrides: [{
+    "files": ["src/*.js"],
+    rules: {
+      "max-len": [
+        "error",
+        {
+          ignoreComments: true,
+          code: 120,
+        },
+      ],
+      "no-continue": "off",
+    },
+  }],
+
   plugins: ["jest"],
 };

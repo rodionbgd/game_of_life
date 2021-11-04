@@ -1,37 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Game of Life</title>
-</head>
-<body>
-<header class="header">
-    <h1 class="header-title">Game of life</h1>
-    <nav>
+  </head>
+  <body>
+    <header class="header">
+      <h1 class="header-title">Game of life</h1>
+      <nav>
         <ul class="controller">
-            <li>
-                <button id="start">start</button>
-            </li>
-            <li>
-                <button id="random">random</button>
-            </li>
-            <li>
-                <button id="next">next</button>
-            </li>
-            <li><input id="width" type="number" min="5" placeholder="width" value="25"></li>
-            <li><input id="height" type="number" min="5" placeholder="height" value="25"></li>
-            <li class="slider-wrapper">
-                <section class="tooltip">
-                    <span class="tooltiptext" id="tooltip">50</span>
-                    <input id="slider" class="slider" type="range" value="50" min="1" max="100">
-                </section>
-            </li>
+          <li>
+            <button id="start">start</button>
+          </li>
+          <li>
+            <button id="random">random</button>
+          </li>
+          <li>
+            <button id="next">next</button>
+          </li>
+          <li>
+            <input
+              id="width"
+              type="number"
+              min="5"
+              placeholder="width"
+              value="25"
+            />
+          </li>
+          <li>
+            <input
+              id="height"
+              type="number"
+              min="5"
+              placeholder="height"
+              value="25"
+            />
+          </li>
+          <li class="slider-wrapper">
+            <section class="tooltip">
+              <span class="tooltiptext" id="tooltip">50</span>
+              <input
+                id="slider"
+                class="slider"
+                type="range"
+                value="50"
+                min="1"
+                max="100"
+              />
+            </section>
+          </li>
         </ul>
-    </nav>
-</header>
-<main class="main">
-    <table class="gamefield" id="gamefield"></table>
-</main>
-</body>
+      </nav>
+    </header>
+    <main class="main">
+      <table class="gamefield" id="gamefield"></table>
+    </main>
+  </body>
 </html>
