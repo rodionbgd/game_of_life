@@ -4,7 +4,7 @@
   "description": "Game of Life",
   "main": "src/control.js",
   "scripts": {
-    "test": "",
+    "test": "jest",
     "lint": "eslint src && prettier --check src",
     "lint:fix": "eslint --fix src && prettier --write src",
     "prepare": "husky install",
