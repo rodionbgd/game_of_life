@@ -20,7 +20,7 @@ export default class GameOfLife {
         this.inactiveArr = JSON.parse(JSON.stringify(this.allCells));
         this.interval = null;
         this.aliveCellNumber = 0;
-        this.lastSpeed = this.slider.getPosition();
+        this.lastSpeed = this.slider.value;
     }
 
     generateField(mode) {
@@ -183,8 +183,8 @@ export default class GameOfLife {
     }
 
     updateGameField(mode) {
-        if (mode !== this.NEXT_MODE && this.slider.getPosition() !== this.lastSpeed) {
-            this.lastSpeed = this.slider.getPosition();
+        if (mode !== this.NEXT_MODE && this.lastSpeed !== this.slider.value) {
+            this.lastSpeed = this.slider.value;
             clearInterval(this.interval);
             this.lifeCycle(this.SPEED_MODE, (100 - this.lastSpeed));
             return;
