@@ -167,18 +167,18 @@ export default class GameOfLife {
   }
 
   updateGameField(mode) {
-    if (mode !== constants.NEXT_MODE && this.lastSpeed !== this.slider.value) {
-      this.lastSpeed = this.slider.value;
+    if (
+      mode !== constants.NEXT_MODE &&
+      this.lastSpeed !== Number(this.slider.value)
+    ) {
+      this.lastSpeed = Number(this.slider.value);
       clearInterval(this.interval);
       this.lifeCycle(constants.SPEED_MODE, 100 - this.lastSpeed);
       return;
     }
     for (let row = 0; row < this.height; row += 1) {
       for (let col = 0; col < this.width; col += 1) {
-        const initialState =
-          this.allCells[row][col] === constants.ALIVE
-            ? constants.ALIVE
-            : constants.DEAD;
+        const initialState = this.allCells[row][col];
         this.inactiveArr[row][col] = this.updateCellValue(row, col);
         const cell = this.gameField.rows[row].cells[col];
         if (this.inactiveArr[row][col] !== initialState) {
