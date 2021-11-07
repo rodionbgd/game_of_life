@@ -3,13 +3,13 @@ import GameOfLife from "./game_of_life";
 import { constants } from "./constants";
 
 export default function init() {
-  const gameField = document.getElementById("gamefield");
-  const startBtn = document.getElementById("start");
-  const randomBtn = document.getElementById("random");
-  const nextBtn = document.getElementById("next");
-  const widthElem = document.getElementById("width");
-  const heightElem = document.getElementById("height");
-  const slider = document.getElementById("slider");
+  const gameField = document.getElementById("gamefield") as HTMLTableElement;
+  const startBtn = document.getElementById("start") as HTMLButtonElement;
+  const randomBtn = document.getElementById("random") as HTMLButtonElement;
+  const nextBtn = document.getElementById("next") as HTMLButtonElement;
+  const widthElem = document.getElementById("width") as HTMLInputElement;
+  const heightElem = document.getElementById("height") as HTMLInputElement;
+  const slider = document.getElementById("slider") as HTMLInputElement;
   const tooltip = document.getElementById("tooltip");
   if (
     !gameField ||
@@ -22,7 +22,7 @@ export default function init() {
     !tooltip
   )
     return;
-  slider.value = slider.getAttribute("value");
+  slider.value = slider.getAttribute("value") as string;
   const gol = new GameOfLife({
     widthElem,
     heightElem,

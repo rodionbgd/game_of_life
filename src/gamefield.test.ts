@@ -2,12 +2,12 @@ import Gamefield from "./gamefield";
 import { constants } from "./constants";
 
 describe("Rendering gamefield", () => {
-  let gameFieldElement;
-  let gameField;
+  let gameFieldElement: HTMLTableElement;
+  let gameField: Gamefield;
 
   beforeEach(() => {
     document.body.innerHTML = ` <table class="gamefield" id="gamefield"></table>`;
-    gameFieldElement = document.getElementById("gamefield");
+    gameFieldElement = document.getElementById("gamefield") as HTMLTableElement;
 
     gameField = new Gamefield({
       elem: gameFieldElement,

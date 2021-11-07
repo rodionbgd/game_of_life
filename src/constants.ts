@@ -9,3 +9,5 @@ export const constants = {
   RAND_MODE: 3,
   SPEED_MODE: 4,
 };
+
+export type DEAD_ALIVE = 0 | 1;

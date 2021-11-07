@@ -9,7 +9,7 @@ const mockLifeCycle = jest.fn();
 const mockGenerateRandField = jest.fn();
 
 jest.mock("./game_of_life", () => jest.fn());
-GameOfLife.mockImplementation(() => ({
+(GameOfLife as jest.Mock).mockImplementation(() => ({
   draw: mockDraw,
   setWidth: mockSetWidth,
   setHeight: mockSetHeight,
@@ -18,12 +18,12 @@ GameOfLife.mockImplementation(() => ({
 }));
 
 describe("Controllers check", () => {
-  let gameField;
-  let startBtn;
-  let widthElem;
-  let heightElem;
-  let randomBtn;
-  let nextBtn;
+  let gameField: HTMLTableElement;
+  let startBtn: HTMLButtonElement;
+  let widthElem: HTMLInputElement;
+  let heightElem: HTMLInputElement;
+  let randomBtn: HTMLButtonElement;
+  let nextBtn: HTMLButtonElement;
 
   beforeEach(() => {
     document.body.innerHTML = `<header class="header">
@@ -76,12 +76,12 @@ describe("Controllers check", () => {
     <main class="main">
       <table class="gamefield" id="gamefield"></table>
     </main>`;
-    gameField = document.getElementById("gamefield");
-    startBtn = document.getElementById("start");
-    widthElem = document.getElementById("width");
-    heightElem = document.getElementById("height");
-    randomBtn = document.getElementById("random");
-    nextBtn = document.getElementById("next");
+    gameField = document.getElementById("gamefield") as HTMLTableElement;
+    startBtn = document.getElementById("start") as HTMLButtonElement;
+    widthElem = document.getElementById("width") as HTMLInputElement;
+    heightElem = document.getElementById("height") as HTMLInputElement;
+    randomBtn = document.getElementById("random") as HTMLButtonElement;
+    nextBtn = document.getElementById("next") as HTMLButtonElement;
     init();
     jest.clearAllMocks();
   });

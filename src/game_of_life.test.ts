@@ -1,13 +1,13 @@
 import GameOfLife from "./game_of_life";
-import { constants } from "./constants";
+import { constants, DEAD_ALIVE } from "./constants";
 
 describe("Controllers testing", () => {
-  let gameField;
-  let startBtn;
-  let widthElem;
-  let heightElem;
-  let slider;
-  let gol;
+  let gameField: HTMLTableElement;
+  let startBtn: HTMLButtonElement;
+  let widthElem: HTMLInputElement;
+  let heightElem: HTMLInputElement;
+  let slider: HTMLInputElement;
+  let gol: GameOfLife;
 
   beforeEach(() => {
     document.body.innerHTML = `<header class="header">
@@ -60,11 +60,11 @@ describe("Controllers testing", () => {
     <main class="main">
       <table class="gamefield" id="gamefield"></table>
     </main>`;
-    gameField = document.getElementById("gamefield");
-    startBtn = document.getElementById("start");
-    widthElem = document.getElementById("width");
-    heightElem = document.getElementById("height");
-    slider = document.getElementById("slider");
+    gameField = document.getElementById("gamefield") as HTMLTableElement;
+    startBtn = document.getElementById("start") as HTMLButtonElement;
+    widthElem = document.getElementById("width") as HTMLInputElement;
+    heightElem = document.getElementById("height") as HTMLInputElement;
+    slider = document.getElementById("slider") as HTMLInputElement;
 
     gol = new GameOfLife({
       widthElem,
@@ -95,7 +95,7 @@ describe("Controllers testing", () => {
     Math.floor(Math.random() * 24),
   ]);
   test.each(cells)("Drawing alive cell[%p,%p]", (row, col) => {
-    const event = {
+    const event: any = {
       target: gameField.rows[row].cells[col],
     };
     const draw = jest.spyOn(gol, "draw");
@@ -109,7 +109,7 @@ describe("Controllers testing", () => {
   test("Redrawing cell", () => {
     const row = 0;
     const col = 0;
-    const event = {
+    const event: any = {
       target: gameField.rows[row].cells[col],
     };
     gol.draw(event);
@@ -123,25 +123,17 @@ describe("Controllers testing", () => {
   });
 
   const sizes = Array.from(Array(10), () => [
-    Math.floor(Math.random() * 24),
-    Math.floor(Math.random() * 24),
+    Math.floor(Math.random() * 24 + 5),
+    Math.floor(Math.random() * 24 + 5),
   ]);
   test.each(sizes)("Setting height: %p, width: %p", (height, width) => {
     const renderField = jest.spyOn(gol, "renderField");
-    gol.widthElem.value = width;
+    gol.widthElem.value = `${width}`;
     gol.setWidth();
-    if (width < Number(gol.widthElem.min)) {
-      expect(gol.widthElem.value).toBe(gol.widthElem.min);
-    } else {
-      expect(Number(gol.widthElem.value)).toBe(width);
-    }
-    gol.heightElem.value = height;
+    expect(Number(gol.widthElem.value)).toBe(width);
+    gol.heightElem.value = `${height}`;
     gol.setHeight();
-    if (height < Number(gol.heightElem.min)) {
-      expect(gol.heightElem.value).toBe(gol.heightElem.min);
-    } else {
-      expect(Number(gol.heightElem.value)).toBe(height);
-    }
+    expect(Number(gol.heightElem.value)).toBe(height);
     expect(renderField).toHaveBeenCalled();
   });
 
@@ -163,7 +155,7 @@ describe("Controllers testing", () => {
     "Cell [%p, %p] has %p neighbours",
     (row, col, res) => {
       cellNeighbours.forEach(([curRow, curCol]) => {
-        gol.allCells[curRow][curCol] = constants.ALIVE;
+        gol.allCells[curRow][curCol] = constants.ALIVE as DEAD_ALIVE;
       });
       expect(gol.countNeighbours(row, col)).toBe(res);
     }
@@ -184,7 +176,7 @@ describe("Controllers testing", () => {
     "Cell [%p, %p, %p] has a result state %p",
     (row, col, initialState, resState) => {
       cells.forEach(([curRow, curCol, curState]) => {
-        gol.allCells[curRow][curCol] = curState;
+        gol.allCells[curRow][curCol] = curState as DEAD_ALIVE;
       });
       expect(gol.updateCellValue(row, col)).toBe(resState);
     }
@@ -204,8 +196,8 @@ describe("Controllers testing", () => {
       gol.updateGameField(mode);
       expect(gol.lastSpeed).toBe(Number(gol.slider.value));
       expect(clearInterval).toHaveBeenCalledTimes(1);
-      expect(gol.interval).toBeNull();
-      expect(lifeCycle).toHaveBeenCalledWith(mode, 100 - gol.lastSpeed);
+      expect(gol.interval).toBeUndefined();
+      expect(lifeCycle).toHaveBeenCalledWith(mode);
     });
 
     test("Not changing speed", async () => {
@@ -228,12 +220,12 @@ describe("Controllers testing", () => {
       gol.updateGameField(mode);
       // no alive cells
       expect(gol.startBtn.innerHTML).toBe("start");
-      expect(gol.interval).toBeNull();
+      expect(gol.interval).toBeUndefined();
     });
 
     test("Next mode, asynchronous class adding", async () => {
       cells.forEach(([curRow, curCol, curState]) => {
-        gol.allCells[curRow][curCol] = curState;
+        gol.allCells[curRow][curCol] = curState as DEAD_ALIVE;
       });
       const mode = constants.NEXT_MODE;
       gol.updateGameField(mode);
@@ -259,7 +251,7 @@ describe("Controllers testing", () => {
       gol.aliveCellNumber = 0;
       gol.startBtn.innerHTML = "stop";
       gol.lifeCycle();
-      expect(gol.interval).toBeNull();
+      expect(gol.interval).toBeUndefined();
       expect(gol.startBtn.innerHTML).toBe("start");
     });
     test("Start game", () => {
@@ -275,7 +267,7 @@ describe("Controllers testing", () => {
       gol.startBtn.innerHTML = "start";
       gol.lifeCycle(mode);
       expect(gol.startBtn.innerHTML).toBe("start");
-      expect(gol.interval).toBeNull();
+      expect(gol.interval).toBeUndefined();
       expect(updateGameField).toHaveBeenCalledTimes(1);
       expect(updateGameField).toHaveBeenCalledWith(mode);
     });
@@ -286,7 +278,7 @@ describe("Controllers testing", () => {
       gol.startBtn.innerHTML = "start";
       gol.lifeCycle();
       await setTimeout(() => {
-        expect(gol.interval).not.toBeNull();
+        expect(gol.interval).not.toBeUndefined();
         expect(updateGameField).toHaveBeenCalledTimes(1);
         expect(setInterval).toHaveBeenCalledWith(
           updateGameField,
