@@ -95,9 +95,9 @@ describe("Controllers testing", () => {
     Math.floor(Math.random() * 24),
   ]);
   test.each(cells)("Drawing alive cell[%p,%p]", (row, col) => {
-    const event: any = {
+    const event = {
       target: gameField.rows[row].cells[col],
-    };
+    } as unknown as Event;
     const draw = jest.spyOn(gol, "draw");
     gol.draw(event);
     expect(draw).toHaveBeenCalledTimes(1);
