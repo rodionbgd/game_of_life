@@ -38,7 +38,7 @@ export default class GameOfLife {
 
   allCells: DEAD_ALIVE[][];
 
-  private inactiveArr: any;
+  private inactiveArr: DEAD_ALIVE[][];
 
   aliveCellNumber: number;
 
@@ -68,8 +68,7 @@ export default class GameOfLife {
     this.allCells = gameFieldRenderOptions.allCells;
     this.inactiveArr = JSON.parse(JSON.stringify(this.allCells));
     this.aliveCellNumber = gameFieldRenderOptions.aliveCellNumber;
-    // eslint-disable-next-line
-    this.lastSpeed = Number(this.slider.value) | 50;
+    this.lastSpeed = Number(this.slider.value) || 50;
   }
 
   generateRandField() {
@@ -224,7 +223,10 @@ export default class GameOfLife {
     for (let row = 0; row < this.height; row += 1) {
       for (let col = 0; col < this.width; col += 1) {
         const initialState = this.allCells[row][col];
-        this.inactiveArr[row][col] = this.updateCellValue(row, col);
+        this.inactiveArr[row][col] = this.updateCellValue(
+          row,
+          col
+        ) as DEAD_ALIVE;
         const cell = this.gameField.rows[row].cells[col];
         if (this.inactiveArr[row][col] !== initialState) {
           let className = "";

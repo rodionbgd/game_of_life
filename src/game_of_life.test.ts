@@ -271,13 +271,13 @@ describe("Controllers testing", () => {
       expect(updateGameField).toHaveBeenCalledTimes(1);
       expect(updateGameField).toHaveBeenCalledWith(mode);
     });
-    test("Play mode launching", async () => {
+    test("Play mode launching", () => {
       const updateGameField = jest.spyOn(gol, "updateGameField");
       const setInterval = jest.spyOn(window, "setInterval");
       gol.aliveCellNumber = Math.floor(Math.random() * (gol.height - 1)) + 1;
       gol.startBtn.innerHTML = "start";
       gol.lifeCycle();
-      await setTimeout(() => {
+      setTimeout(() => {
         expect(gol.interval).not.toBeUndefined();
         expect(updateGameField).toHaveBeenCalledTimes(1);
         expect(setInterval).toHaveBeenCalledWith(
