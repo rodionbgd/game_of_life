@@ -1,0 +1,348 @@
+$baseCellDiameter: calc(0.5em + 1.8vh);
+$color-baseCell: #917155;
+$color-aliveCell: #7ad37a;
+$color-newAliveCell: #e0d3bf;
+$color-newDeadCell: #720707;
+$bg-color: #eee;
+$color: #4aecaa;
+$thumb-color: #1d9aee;
+
+:root {
+  box-sizing: border-box;
+  font-size: calc(0.5em + 1vw);
+}
+
+*,
+:before,
+:after {
+  box-sizing: inherit;
+}
+
+body {
+  height: 100vh;
+}
+
+.header {
+  &-title {
+    color: $color;
+  }
+
+  margin: 15px 0 0;
+  font-family: sans-serif;
+}
+
+.controller {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  padding-left: 0;
+
+  li {
+    display: inline-block;
+    margin: 0.5em;
+
+    > * {
+      width: 6em;
+      font-size: 1.5rem;
+      padding: 0.5rem 1.5rem;
+      border: 2px solid $color;
+      border-radius: 0.5em;
+      font-weight: 300;
+    }
+
+    button {
+      background-color: rgba(255, 255, 255, 0.6);
+      outline: none;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    input {
+      text-align: left;
+      width: 6em;
+    }
+  }
+
+  .slider-wrapper {
+    padding: 0 0.5em;
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      background: $thumb-color;
+      width: 100%;
+      height: 8px;
+      outline: none !important;
+      appearance: none;
+      border: none;
+      border-radius: 30px;
+    }
+
+    input[type="range"]::-moz-focus-outer {
+      border: 0;
+    }
+
+    input[type="range"]:hover {
+      outline: none;
+    }
+
+    /* Chrome */
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 9px;
+      height: 9px;
+      background: $thumb-color;
+      cursor: pointer;
+      border-radius: 30px;
+      outline: none;
+    }
+
+    /* Moz */
+
+    input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      background: $thumb-color;
+      cursor: pointer;
+      border-radius: 50%;
+      border: none;
+      outline: none;
+    }
+
+    input[type="range"]::-moz-range-progress {
+      background-color: $thumb-color;
+      height: 100%;
+      border-radius: 30px;
+      border: none;
+    }
+
+    input[type="range"]::-moz-range-track {
+      background-color: $thumb-color;
+      border-radius: 30px;
+      border: none;
+      height: 100%;
+    }
+
+    /* IE*/
+
+    input[type="range"]::-ms-fill-lower {
+      background-color: $thumb-color;
+      height: 100%;
+      border-radius: 30px;
+      border: none;
+    }
+
+    input[type="range"]::-ms-fill-upper {
+      background-color: $thumb-color;
+      border-radius: 1.5em;
+      border: none;
+      height: 100%;
+    }
+
+    .tooltip {
+      position: relative;
+      padding: 1.5rem 0;
+      border: none;
+
+      .tooltiptext {
+        visibility: hidden;
+        width: 30%;
+        font-size: 0.8em;
+        color: #5d5c5c;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 6px;
+        position: absolute;
+        z-index: 1;
+        top: -5px;
+        left: calc(50% - 30% / 2);
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          margin-left: -5px;
+          border-width: 5px;
+          border-style: solid;
+          border-color: $color transparent transparent transparent;
+        }
+      }
+
+      &:hover .tooltiptext {
+        border: 1px solid $color;
+        visibility: visible;
+      }
+    }
+  }
+}
+
+.main {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.gamefield {
+  height: 100%;
+  padding: 0;
+  margin: 0 auto;
+  //overflow: auto;
+
+  tbody {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background-color: #9d8061;
+    height: 100%;
+    margin-bottom: 5px;
+  }
+
+  tr {
+    display: flex;
+    height: $baseCellDiameter;
+    text-align: center;
+    @supports (display: flex) {
+      height: auto;
+    }
+  }
+}
+
+.c {
+  border: 2px solid rgba(25, 25, 25, 0.8);
+  border-radius: 45%;
+  background-color: $color-baseCell;
+  min-width: $baseCellDiameter;
+  min-height: $baseCellDiameter;
+  width: $baseCellDiameter;
+  height: $baseCellDiameter;
+  opacity: 0.8;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  transition: opacity 0.1s ease, transform 0.15s ease-out;
+
+  &:not(:target) {
+    height: 100%;
+  }
+
+  @supports (display: flex) {
+    &.c {
+      height: auto;
+    }
+  }
+
+  &:before {
+    background: rgb(30, 30, 30);
+    border-radius: 50%;
+    content: "";
+    display: block;
+    height: 30%;
+    left: 50%;
+    opacity: 0.6;
+    position: absolute;
+    transform: translate(-55%, -45%);
+    top: 50%;
+    width: 30%;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &.alive {
+    background: $color-aliveCell;
+
+    &:hover {
+      transform: scaleX(0.9) scaleY(0.6);
+      animation: wiggleCell 0.8s infinite;
+      will-change: opacity;
+    }
+  }
+
+  &.new-dead {
+    background: $color-newDeadCell;
+  }
+
+  &.new-alive {
+    background: $color-newAliveCell;
+  }
+}
+
+.c1 {
+  transform: scale(0.95) skewX(-4deg);
+
+  &:before {
+    height: 40%;
+    opacity: 0.5;
+    transform: translate(-40%, -30%);
+    width: 30%;
+  }
+}
+
+.c2 {
+  transform: scale(0.88);
+
+  &:before {
+    height: 20%;
+    opacity: 0.8;
+    transform: translate(-70%, -30%);
+    width: 30%;
+  }
+}
+
+.c3 {
+  transform: scale(0.95) skewY(2deg);
+
+  &:before {
+    height: 50%;
+    opacity: 0.4;
+    transform: skewY(10deg) translate(-20%, -70%);
+    width: 40%;
+  }
+}
+
+.c4 {
+  transform: scale(0.9) skewX(3deg);
+
+  &:before {
+    height: 35%;
+    opacity: 0.5;
+    transform: translate(-15%, -55%);
+    width: 45%;
+  }
+}
+
+.c5 {
+  &:before {
+    height: 40%;
+    transform: skewX(5deg) translate(-60%, -24%);
+    width: 50%;
+  }
+}
+
+@keyframes wiggleCell {
+  0% {
+    transform: scale(1) rotate(0);
+  }
+  20% {
+    transform: scale(0.95) rotate(4deg);
+  }
+  40% {
+    transform: scale(0.97) rotate(-8deg);
+  }
+  60% {
+    transform: scale(0.99) rotate(2deg);
+  }
+  80% {
+    transform: scale(0.94) rotate(-5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
