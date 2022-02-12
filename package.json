@@ -4,10 +4,11 @@
   "description": "Game of Life",
   "main": "src/control.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
+    "test:badges": "npm run test  && jest-coverage-badges output \"./badges\"",
     "lint": "eslint src && prettier --check src",
     "lint:fix": "eslint --fix src && prettier --write src",
-    "ci" : "npm run test && npm run lint:fix",
+    "ci": "npm test && npm run lint:fix",
     "prepare": "husky install",
     "dev": "webpack serve --node-env development",
     "build": "webpack --node-env production"
@@ -56,6 +57,7 @@
     "husky": "^7.0.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.0.6",
+    "jest-coverage-badges": "^1.1.2",
     "jest-fetch-mock": "^3.0.3",
     "lint-staged": "^11.1.2",
     "live-server": "^1.2.1",
