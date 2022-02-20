@@ -113,7 +113,9 @@ export default class GameOfLife {
       for (let j = -1; j < 2; j += 1) {
         if (!i && !j) continue;
         try {
-          if (this.allCells[row + i][col + j] === constants.ALIVE) {
+          const rowTmp = (row + i + this.width) % this.width;
+          const colTmp = (col + j + this.height) % this.height;
+          if (this.allCells[rowTmp][colTmp] === constants.ALIVE) {
             neighbours += 1;
           }
         } catch (e) {

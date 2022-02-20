@@ -11,7 +11,8 @@
     "ci": "npm test && npm run lint:fix",
     "prepare": "husky install",
     "dev": "webpack serve --node-env development",
-    "build": "webpack --node-env production"
+    "build": "webpack --node-env production",
+    "version": "auto-changelog  --tag-pattern .+ --hide-credit && git add CHANGELOG.md && git commit -am \"chore: Changelog update\" && git push origin"
   },
   "husky": {
     "hooks": {
