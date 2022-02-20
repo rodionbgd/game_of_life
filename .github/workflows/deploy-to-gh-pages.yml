@@ -1,9 +1,6 @@
 name: Deploy to GithubPages
 
-on:
-  push:
-    branches:
-      - create_gol
+on: push
 
 jobs:
   deploy-to-gh-pages:
